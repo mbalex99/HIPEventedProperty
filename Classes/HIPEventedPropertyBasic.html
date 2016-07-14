@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HIPEventedPropertyBasic Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/HIPEventedPropertyBasic" class="dashAnchor"></a>
+    <a title="HIPEventedPropertyBasic Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">HIPEventedProperty Docs</a> (92% documented)</p>
+        <p class="header-right"><a href="https://github.com/Hipmunk/HIPEventedProperty"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fhipmunk%2Egithub%2Ecom%2Fdocsets%2FHIPEventedProperty%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">HIPEventedProperty Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        HIPEventedPropertyBasic Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/HIPEventSource.html">HIPEventSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HIPEventedProperty.html">HIPEventedProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HIPEventedPropertyBasic.html">HIPEventedPropertyBasic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HIPEventedPropertyOptional.html">HIPEventedPropertyOptional</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/HIPEventSourceWithValue.html">HIPEventSourceWithValue</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>HIPEventedPropertyBasic</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">HIPEventedPropertyBasic</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">HIPEventSource</span><span class="p">,</span> <span class="kt">HIPEventSourceWithValue</span></code></pre>
+
+                </div>
+              </div>
+            <p>The <q>basic</q> variety of <code><a href="../Classes/HIPEventedProperty.html">HIPEventedProperty</a></code> has no constraints on the type, but performs no duplicate
+value checks before firing subscribers.</p>
+
+<p>See <code><a href="../Protocols/HIPEventSourceWithValue.html">HIPEventSourceWithValue</a></code> for more methods.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC18HIPEventedProperty23HIPEventedPropertyBasic5valuex"></a>
+                    <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC18HIPEventedProperty23HIPEventedPropertyBasic5valuex">value</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Stored value of the property. Whenever this changes, all subscribers are fired unless their associated
+objects have been deallocated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span> <span class="p">{</span> <span class="k">didSet</span> <span class="p">{</span> <span class="nf">fireEvent</span><span class="p">()</span> <span class="p">}</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Hipmunk/HIPEventedProperty/tree/master/HIPEventedProperty/HIPEventedProperty.swift#L152">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC18HIPEventedProperty23HIPEventedPropertyBasiccFxGS0_x_"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC18HIPEventedProperty23HIPEventedPropertyBasiccFxGS0_x_">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">initialValue</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>initialValue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Initial value of the property</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>skipDuplicates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If <code>true</code> (default), subscribers are not fired when <code>value</code> is set if it is not <code>==</code> to the previous value.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Hipmunk/HIPEventedProperty/tree/master/HIPEventedProperty/HIPEventedProperty.swift#L158-L160">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://hipmunk.com" target="_blank" rel="external">Hipmunk</a>. All rights reserved. (Last updated: 2016-07-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HIPEventedProperty  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="HIPEventedProperty  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">HIPEventedProperty Docs</a> (92% documented)</p>
+        <p class="header-right"><a href="https://github.com/Hipmunk/HIPEventedProperty"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fhipmunk%2Egithub%2Ecom%2Fdocsets%2FHIPEventedProperty%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">HIPEventedProperty Reference</a>
+        <img id="carat" src="img/carat.png" />
+        HIPEventedProperty  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/HIPEventSource.html">HIPEventSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/HIPEventedProperty.html">HIPEventedProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/HIPEventedPropertyBasic.html">HIPEventedPropertyBasic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/HIPEventedPropertyOptional.html">HIPEventedPropertyOptional</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/HIPEventSourceWithValue.html">HIPEventSourceWithValue</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#hipeventedproperty' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='hipeventedproperty'>HIPEventedProperty</h1>
+
+<p>HIPEventedProperty is a simple library of observables, intended to be the minimum viable support
+for a Model-View-ViewModel (MVVM) architecture. At Hipmunk, we&rsquo;ve used it for exactly that, and
+have hardly changed anything over a year of app development.</p>
+
+<p>Think of it as
+<a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a>
+stripped way, way down. It&rsquo;s less than 150 lines long.</p>
+<a href='#design_goals' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='design_goals'>Design goals</h2>
+
+<ul>
+<li>Small stack traces</li>
+<li>Easily understood memory model</li>
+<li>Simple, clear code with no complex type system tricks</li>
+<li>Obvious API</li>
+</ul>
+
+<p>ReactiveCocoa is a lot more powerful, and even more succinct in most cases, but
+HIPEventedProperty asks very little of your brain.</p>
+<a href='#examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='examples'>Examples</h2>
+<a href='#code_hipeventsource_code' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='code_hipeventsource_code'><code>HIPEventSource</code></h3>
+
+<p>The most basic class in the module is <code>HIPEventSource</code>. A <code>HIPEventSource</code> collects callbacks
+that are tied to the memory lifecycle of objects, and allows them to be fired iff their associated
+objects are still alive.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">p</span> <span class="o">=</span> <span class="kt">HIPEventedProperty</span><span class="p">()</span>
+<span class="k">var</span> <span class="nv">x</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">?</span> <span class="o">=</span> <span class="kt">NSObject</span><span class="p">()</span>
+
+<span class="n">p</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">withObject</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Event fired"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">p</span><span class="o">.</span><span class="nf">fireEvent</span><span class="p">()</span>  <span class="c1">// prints "Event fired"</span>
+<span class="n">x</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="n">p</span><span class="o">.</span><span class="nf">fireEvent</span><span class="p">()</span>  <span class="c1">// nothing happens</span>
+</code></pre>
+
+<p>99.9% of the time, you&rsquo;ll be instantiating a <code>HIPEventSource</code> inside a class, and you&rsquo;ll want its
+callback to be cleaned up whenever <code>self</code> is deallocated.</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MyViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">taps</span><span class="p">:</span> <span class="kt">HIPEventSource</span><span class="o">!</span>
+    <span class="kd">@IBOutlet</span> <span class="k">var</span> <span class="nv">tapLabel</span><span class="p">:</span> <span class="kt">UILabel</span><span class="o">!</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">taps</span> <span class="o">=</span> <span class="kt">HIPEventSource</span><span class="p">()</span>
+        <span class="n">taps</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">withObject</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="k">in</span>
+            <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="n">tapLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">+=</span> <span class="p">(</span><span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="n">tapLabel</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span> <span class="o">+</span> <span class="s">"tap "</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#hipeventedproperty' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='hipeventedproperty'>HIPEventedProperty</h3>
+
+<p>To store a value inside your event source, you&rsquo;ll need to use one of the variants of the
+<code>HIPEventedProperty</code> class:</p>
+
+<ul>
+<li><code>HIPEventedProperty</code>: Equatable, non-optional</li>
+<li><code>HIPEventedPropertyOptional</code>: Equatable, optional</li>
+<li><code>HIPEventedPropertyBasic</code>: No restrictions, no skipping of duplicate values</li>
+</ul>
+<pre class="highlight swift"><code><span class="c1">// numTaps.value has type `Int`</span>
+<span class="k">let</span> <span class="nv">numTaps</span> <span class="o">=</span> <span class="kt">HIPEventedProperty</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">// rating.value has type `Int?`</span>
+<span class="k">let</span> <span class="nv">rating</span> <span class="o">=</span> <span class="kt">HIPEventedPropertyOptional</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="c1">// asyncImage.value has type `UIImage?`</span>
+<span class="k">let</span> <span class="nv">asyncImage</span> <span class="o">=</span> <span class="kt">HIPEventedPropertyBasic</span><span class="o">&lt;</span><span class="kt">UIImage</span><span class="p">?</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="c1">// Properties have more methods. Here's one:</span>
+
+<span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="kt">NSObject</span><span class="p">()</span>  <span class="c1">// this is just an example, never deallocate this</span>
+<span class="n">rating</span><span class="o">.</span><span class="nf">subscribeToValue</span><span class="p">(</span><span class="nv">withObject</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="k">let</span> <span class="nv">r</span> <span class="o">=</span> <span class="nv">$0</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Rating: </span><span class="se">\(</span><span class="n">r</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Rating: no rating"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#contributors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='contributors'>Contributors</h2>
+
+<ul>
+<li><a href="http://github.com/irskep">irskep</a></li>
+<li><a href="http://github.com/jfrndz">jfrndz</a></li>
+<li><a href="http://github.com/vytk">vytk</a></li>
+<li><a href="http://github.com/CameronAskew">CameronAskew</a></li>
+</ul>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://hipmunk.com" target="_blank" rel="external">Hipmunk</a>. All rights reserved. (Last updated: 2016-07-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
