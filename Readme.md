@@ -86,3 +86,10 @@ rating.subscribeToValue(withObject: x) {
   }
 }
 ```
+
+## Contributors
+
+* [irskep](http://github.com/irskep)
+* [jfrndz](http://github.com/jfrndz)
+* [vytk](http://github.com/vytk)
+* [CameronAskew](http://github.com/CameronAskew)
