@@ -1,5 +1,7 @@
 # HIPEventedProperty
 
+![Swift 2.2](https://img.shields.io/badge/Swift-2.2-orange.svg?style=flat)
+
 HIPEventedProperty is a simple library of observables, intended to be the minimum viable support
 for a Model-View-ViewModel (MVVM) architecture. At Hipmunk, we've used it for exactly that, and
 have hardly changed anything over a year of app development.
