@@ -10,27 +10,37 @@ import XCTest
 @testable import HIPEventedProperty
 
 class HIPEventedPropertyTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testSubscribeOnce() {
+        let p = HIPEventedProperty<Bool>(false)
+        var numTimesFired = 0
+        _ = p.subscribeOnce(withObject: self) {
+            numTimesFired += 1
         }
+        p.value = true
+        p.value = false
+        XCTAssert(numTimesFired == 1)
     }
-    
+
+    func testSubscribeOnceCanUnsubscribe() {
+        let p = HIPEventedProperty<Bool>(false)
+        var numTimesFired = 0
+        let unsubscribe = p.subscribeOnce(withObject: self) {
+            numTimesFired += 1
+        }
+        unsubscribe()
+        p.value = true
+        p.value = false
+        XCTAssert(numTimesFired == 0)
+    }
+
+    func testOnSubscriberAdded() {
+        let p = HIPEventedProperty<Bool>(false)
+
+        let expectation = expectationWithDescription("did fire callback")
+        p.onSubscriberAdded = { _ in expectation.fulfill() }
+
+        _ = p.subscribe(withObject: self, callback: { })
+
+        waitForExpectationsWithTimeout(0.1, handler: nil)
+    }
 }
