@@ -14,6 +14,7 @@ import Foundation
  to all of them.
  */
 public protocol HIPEventSourceWithValue: class {
+    /// Type of the value stored in this property
     associatedtype ValueType
 
     /// Stored value of the property. Whenever this changes, all subscribers are fired unless their associated
