@@ -12,8 +12,6 @@
 		F2B9F0DC1D383A7A008357DB /* HIPEventedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B9F0DB1D383A7A008357DB /* HIPEventedProperty.swift */; };
 		F2B9F0DF1D383D2E008357DB /* WeakrefSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B9F0DE1D383D2E008357DB /* WeakrefSubscriber.swift */; };
 		F2B9F0E11D383EDC008357DB /* HIPEventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B9F0E01D383EDC008357DB /* HIPEventSource.swift */; };
-		F2B9F0E61D384D9B008357DB /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = F2B9F0E41D384D9B008357DB /* Makefile */; };
-		F2B9F0E71D384D9B008357DB /* Readme.md in Sources */ = {isa = PBXBuildFile; fileRef = F2B9F0E51D384D9B008357DB /* Readme.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,10 +205,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2B9F0E71D384D9B008357DB /* Readme.md in Sources */,
 				F2B9F0DC1D383A7A008357DB /* HIPEventedProperty.swift in Sources */,
 				F2B9F0DF1D383D2E008357DB /* WeakrefSubscriber.swift in Sources */,
-				F2B9F0E61D384D9B008357DB /* Makefile in Sources */,
 				F2B9F0E11D383EDC008357DB /* HIPEventSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
