@@ -14,10 +14,10 @@ import Foundation
  considered dead and will never be called again.
  */
 internal class WeakRefSubscriber {
-    private weak var object: AnyObject?
-    private var callback: () -> Void
+    fileprivate weak var object: AnyObject?
+    fileprivate var callback: () -> Void
 
-    init(object: AnyObject, callback: () -> Void) {
+    init(object: AnyObject, callback: @escaping () -> Void) {
         self.callback = callback
         self.object = object
     }

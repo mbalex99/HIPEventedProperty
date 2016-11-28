@@ -36,11 +36,11 @@ class HIPEventedPropertyTests: XCTestCase {
     func testOnSubscriberAdded() {
         let p = HIPEventedProperty<Bool>(false)
 
-        let expectation = expectationWithDescription("did fire callback")
+        let expectation = self.expectation(description: "did fire callback")
         p.onSubscriberAdded = { _ in expectation.fulfill() }
 
         _ = p.subscribe(withObject: self, callback: { })
 
-        waitForExpectationsWithTimeout(0.1, handler: nil)
+        waitForExpectations(timeout: 0.1, handler: nil)
     }
 }

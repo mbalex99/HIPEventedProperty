@@ -23,17 +23,17 @@ public protocol HIPEventSourceWithValue: class {
 
     // This protocol only applies to HIPEventSource, but Swift doesn't let us specify that, so its methods
     // are declared as part of HIPEventSourceWithValue.
-    func subscribe(withObject object: AnyObject, callback: () -> Void) -> (() -> Void)
+    func subscribe(withObject object: AnyObject, callback: @escaping () -> Void) -> (() -> Void)
 
     // This protocol only applies to HIPEventSource, but Swift doesn't let us specify that, so its methods
     // are declared as part of HIPEventSourceWithValue.
-    func subscribeOnce(withObject object: AnyObject, callback: () -> Void) -> (() -> Void)
+    func subscribeOnce(withObject object: AnyObject, callback: @escaping () -> Void) -> (() -> Void)
 }
 
 
 public extension HIPEventSourceWithValue {
     /// `onChange(value)` is called whenever `self.value` changes.
-    public func subscribeToValue(withObject object: AnyObject, onChange: (ValueType) -> ()) -> () -> () {
+    public func subscribeToValue(withObject object: AnyObject, onChange: @escaping (ValueType) -> ()) -> () -> () {
         return self.subscribe(withObject: object) { [weak self] in
             guard let strongSelf = self else { return }
             onChange(strongSelf.value)
@@ -41,7 +41,7 @@ public extension HIPEventSourceWithValue {
     }
 
     /// `onChange(value)` is called the next time `self.value` changes, unless `self` is deallocated first.
-    public func subscribeOnceToValue(withObject object: AnyObject, onChange: (ValueType) -> ()) -> () -> () {
+    public func subscribeOnceToValue(withObject object: AnyObject, onChange: @escaping (ValueType) -> ()) -> () -> () {
         var unsubscribe: (() -> ())?
         unsubscribe = self.subscribeOnce(withObject: object, callback: { [weak self] in
             guard let strongSelf = self else { return }
@@ -55,7 +55,7 @@ public extension HIPEventSourceWithValue {
     /// `onChange(oldValue, newValue)` is called whenever `self.value` changes.
     public func subscribeToSlidingWindow(
         withObject object: AnyObject,
-        onChange: (ValueType, ValueType) -> ())
+        onChange: @escaping (ValueType, ValueType) -> ())
         -> () -> ()
     {
         var lastValue = self.value
@@ -77,20 +77,20 @@ public extension HIPEventSourceWithValue {
  When the value changes, subscribers are only fired if the new value is not `==` to the old value, unless
  `shouldSkipDuplicates` is set to `true`.
  */
-public class HIPEventedProperty<T: Equatable>: HIPEventSource, HIPEventSourceWithValue {
+open class HIPEventedProperty<T: Equatable>: HIPEventSource, HIPEventSourceWithValue {
     public typealias ValueType = T
 
     /// Stored value of the property. Whenever this changes, all subscribers are fired unless their associated
     /// objects have been deallocated, or the new value is `==` to the old value and `shouldSkipDuplicates`
     /// is `true`.
-    public var value: T { didSet {
+    open var value: T { didSet {
         if shouldSkipDuplicates && oldValue == value { return }
         fireEvent()
     } }
 
     /// If `true` (default), subscribers are not fired when `value` is set if it is not `==` to the previous
     /// value.
-    public var shouldSkipDuplicates: Bool
+    open var shouldSkipDuplicates: Bool
 
     /**
      - parameter initialValue: Initial value of the property
@@ -113,20 +113,20 @@ public class HIPEventedProperty<T: Equatable>: HIPEventSource, HIPEventSourceWit
  When the value changes, subscribers are only fired if the new value is not `==` to the old value, unless
  `shouldSkipDuplicates` is set to `true`.
  */
-public class HIPEventedPropertyOptional<T: Equatable>: HIPEventSource, HIPEventSourceWithValue {
+open class HIPEventedPropertyOptional<T: Equatable>: HIPEventSource, HIPEventSourceWithValue {
     public typealias ValueType = T?
 
     /// Stored value of the property. Whenever this changes, all subscribers are fired unless their associated
     /// objects have been deallocated, or the new value is `==` to the old value and `shouldSkipDuplicates`
     /// is `true`.
-    public var value: T? { didSet {
+    open var value: T? { didSet {
         if shouldSkipDuplicates && oldValue == value { return }
         fireEvent()
     } }
 
     /// If `true` (default), subscribers are not fired when `value` is set if it is not `==` to the previous
     /// value.
-    public var shouldSkipDuplicates: Bool
+    open var shouldSkipDuplicates: Bool
 
     /**
      - parameter initialValue: Initial value of the property
@@ -145,12 +145,12 @@ public class HIPEventedPropertyOptional<T: Equatable>: HIPEventSource, HIPEventS
  
  See `HIPEventSourceWithValue` for more methods.
  */
-public class HIPEventedPropertyBasic<T>: HIPEventSource, HIPEventSourceWithValue {
+open class HIPEventedPropertyBasic<T>: HIPEventSource, HIPEventSourceWithValue {
     public typealias ValueType = T
 
     /// Stored value of the property. Whenever this changes, all subscribers are fired unless their associated
     /// objects have been deallocated.
-    public var value: T { didSet { fireEvent() } }
+    open var value: T { didSet { fireEvent() } }
 
     /**
      - parameter initialValue: Initial value of the property
